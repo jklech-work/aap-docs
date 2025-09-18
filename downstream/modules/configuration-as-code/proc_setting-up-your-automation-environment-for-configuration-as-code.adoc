@@ -1,0 +1,23 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2025-09-18
+:_mod-docs-content-type: PROCEDURE
+
+[id="setting-up-your-automation-environment-for-configuration-as-code_{context}"]
+= Setting up your automation environment for Configuration-as-Code
+
+Write a short introductory paragraph that provides an overview of the module. The introduction should include what the module will help the user do and why it will be beneficial to the user. Include key words that relate to the module to maximize search engine optimization.
+
+.Prerequisites
+
+* A bulleted list of conditions that must be satisfied before the user starts the steps in this module.
+* Prerequisites can be full sentences or sentence fragments; however, prerequisite list items must be parallel.
+
+.Procedure
+
+. Make each step an instruction.
+
+. Include one command or action for each step with the exception of simple follow-step, for example:
+.. Do this thing and then select *Next*.
+.. Do this other thing and then select *Next*.
+
+. Use an unnumbered bullet (*) if the procedure includes only one step.
