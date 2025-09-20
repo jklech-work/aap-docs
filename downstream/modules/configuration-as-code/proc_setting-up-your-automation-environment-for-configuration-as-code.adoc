@@ -5,19 +5,89 @@
 [id="setting-up-your-automation-environment-for-configuration-as-code_{context}"]
 = Setting up your automation environment for Configuration-as-Code
 
-Write a short introductory paragraph that provides an overview of the module. The introduction should include what the module will help the user do and why it will be beneficial to the user. Include key words that relate to the module to maximize search engine optimization.
+Configuration-as-Code is a way of working where you define and manage the configuration of the Ansible Automation Platform (AAP) itself using the version-controlled configuration files (YAML, JSON), instead of clicking through the web UI.
+
+As an Ansible content developer, you can use the Configuration-as-Code approach to apply settings on your AAP Controller to get the following benefits:
+
 
 .Prerequisites
 
-* A bulleted list of conditions that must be satisfied before the user starts the steps in this module.
-* Prerequisites can be full sentences or sentence fragments; however, prerequisite list items must be parallel.
+* You have a GitHub account.
+* You have a link:https://quay.io[Quay.io] account.
+* You have functional AAP and attached the relevant RHEL subscriptions on all of its components.
+* Your AAP Gateway instance is accessible.
+
 
 .Procedure
 
-. Make each step an instruction.
+. Fork, then clone to your local machine this link:https://github.com/rohitthakur2590/aap-2.6-ansible-platform-testathon-playbooks[Github repository].
 
-. Include one command or action for each step with the exception of simple follow-step, for example:
-.. Do this thing and then select *Next*.
-.. Do this other thing and then select *Next*.
 
-. Use an unnumbered bullet (*) if the procedure includes only one step.
+. Update the `~/aap-2.6-ansible-platform-testathon-playbooks/vars/aap.yml` file with the following variables:
++
+[source,yaml,subs="+quotes"]
+....
+---
+aap_hostname: "http://<YOUR_GATEWAY_IP>"
+aap_username: "<YOUR_GATEWAY_USER>"
+aap_password: "<YOUR_GATEWAY_PWD>"
+aap_validate_certs: false
+....
+
+
+. Update the `~/aap-2.6-ansible-platform-testathon-playbooks/vars/user.yml` file with the following variable:
++
+[source,yaml,subs="+quotes"]
+....
+---
+rh_username: "<YOUR_OFFICIAL_RH_USERNAME>"
+....
+
+
+. On your local machine, commit and push all the updated variables to your forked GitHub repository so that AAP Controller can later read in the correct data:
++
+[subs="+quotes"]
+....
+git add .
+git commit -m "Update variables for your_official_rh_username"
+git push origin <relevant_branch_name>
+....
+
+
+. Through the AAP Gateway UI, register and save an Execution Environment with the following values:
++
+* Name: ansible-platform-ee
+* Image: quay.io/rothakur18/platform-ee02
+* Pull: Always pull container before running
+* Description: Execution Environment to test the CaC capability
+* Organization: Default
++
+image::cac-create-ee.png[Create Execution Environment]
+
+
+. Through the AAP Gateway UI, create a new Project with the following values:
++
+* Name: Platform collection testing
+* Description: Automation resources to test the CaC capability of RBAC modules from ansible.platform collection
+* Execution Environment: ansible-platform-ee
+* Organization: Default
+* Source Control Type: Git
+* Source Control URL: https://github.com/<YOUR-GITHUB-USERNAME>/aap-2.6-ansible-platform-testathon-playbooks
++
+image::cac-create-project.png[Create Project]
+
+
+. Through the AAP Gateway UI, create a job Template with the following values:
++
+* Name: 1487-1-1-TC-RDEF
+* Description: Create a role definition with permissions
+* Job type: Run
+* Inventory: Demo Inventory
+* Project: Platform collection testing
+* Execution Environment: ansible-platform-ee
+* Playbook: 1487-1-1-TC-RDEF.yaml
++
+image::cac-create-job-template.png[Create job Template]
+
+
+. If needed, create job templates for the other playbooks in the configured GitHub repository.
