@@ -11,3 +11,5 @@ include::{Boilerplate}[]
 
 
 include::configuration-as-code/configuration-as-code/proc_setting-up-your-automation-environment-for-configuration-as-code.adoc[leveloffset=+1]
+
+include::configuration-as-code/configuration-as-code/proc_using-ansible-playbooks-to-create-rbac-role-definitions.adoc[leveloffset=+1]

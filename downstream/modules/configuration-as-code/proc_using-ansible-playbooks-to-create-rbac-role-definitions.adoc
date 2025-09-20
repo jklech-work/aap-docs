@@ -1,0 +1,57 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2025-09-20
+:_mod-docs-content-type: PROCEDURE
+
+[id="using-ansible-playbooks-to-create-rbac-role-definitions_{context}"]
+= Using Ansible playbooks to create RBAC role definitions
+
+As an Ansible automation content developer, you can use the `role_definition` module from the `ansible.platform` collection in a Config-as-Code (CaC) approach to create new roles at scale with specific names, permissions, and content type. As a result, you can assign those roles to users to efficiently and securely manage access to your systems, networks, and resources when using AAP.
+
+
+.Prerequisites
+
+* You have functional AAP and attached the relevant RHEL subscriptions on all of its components.
+* You have set up your automation environment as described in “Setting up your automation environment for Configuration-as-Code”.
+* Your AAP Gateway instance is accessible.
+
+
+.Procedure
+
+. Navigate to the `Templates` tab and find the job template you already created earlier.
++
+image::cac-navigate-to-templates.png[Find the relevant job template]
+
+
+. Verify the job template is set as you need.
++
+image::cac-verify-template-details.png[Check the job template details]
+
+
+. Launch the job template to create the RBAC role with permissions specified in the `1487-1-1-TC-RDEF.yaml` playbook. After the template job successfully finishes, you should see a similar output as in the following example:
++
+[source,yaml,subs="+quotes"]
+....
+...
+10 TASK [Role name]
+11 ok: [localhost] => {
+12 "msg": "TestRole-1-your_official_rh_username"
+13 }
+14
+15 TASK [Create a role definition with permissions]
+16 *changed: [localhost]*
+...
+...
+...
+38 PLAY RECAP
+39 localhost : ok=8 *changed=1* unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
+....
++
+The output message means that you ran the job template against 1 target (your localhost). At the same time, an RBAC role with the name "TestRole-1-your_official_rh_username" was created.
+
+.Verification
+
+* Check the `Roles` tab within the `Access Management` tab to ensure that you created your role with the intended settings.
++
+image::cac-verify-created-role.png[Verify the created RBAC role]
++
+The RBAC role was successfully created and was assigned the correct permissions to view and change inventory.
