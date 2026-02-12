@@ -30,8 +30,6 @@ global:
                   icon: AnsibleLogo
                   text: Ansible
                 path: /ansible
-        backend:
-          ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
 
 upstream:
   backstage:
