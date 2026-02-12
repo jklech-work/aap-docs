@@ -4,7 +4,7 @@
 = Configuring Ansible Automation Platform details
 
 [role="_abstract"]
-The Ansible plug-ins query your {PlatformNameShort} subscription status with the controller API using a token.
+Connect Red Hat Developer Hub to your automation controller by configuring the Ansible Automation Platform details. This configuration uses a Personal Access Token to authenticate the plug-ins, which allows them to interact with your automation environment.
 
 [NOTE]
 ====

@@ -2,8 +2,8 @@
 :_template-generated: 2026-01-29
 :_mod-docs-content-type: PROCEDURE
 
-[id="prepare-to-pull-plug-ins-from-registry_{context}"]
-= Prepare to pull plug-ins from registry
+[id="prepare-to-pull-ansible-plug-ins-from-the-redhat-container-registry_{context}"]
+= Prepare to pull Ansible plug-ins from the Red Hat container registry
 
 [role="_abstract"]
 You need to go through some prerequisite steps before you can obtain plug-ins directly from `registry.redhat.io` during the deployment.
@@ -33,7 +33,7 @@ The generated username and token are in format `<random-string>|<your-token-name
 {
   "auths": {
     "registry.redhat.io": {
-      "auth": "<base64-encoded-username:password>"
+      "auth": "<base64-encoded-username-password>"
     }
   }
 }
