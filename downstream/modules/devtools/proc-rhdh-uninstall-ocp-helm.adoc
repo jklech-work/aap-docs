@@ -30,7 +30,7 @@ global:
           ...
 ----
 +
-For HTTP plug-in registry, remove the `http://plugin-registry:8080/...` entries instead.
+For HTTP plug-in registry, remove the `http://plugin-registry:8080/\...` entries instead.
 
 
 . Remove the `extraContainers` section.

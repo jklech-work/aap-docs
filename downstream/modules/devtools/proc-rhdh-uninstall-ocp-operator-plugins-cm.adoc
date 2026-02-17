@@ -32,7 +32,7 @@ plugins:
       ...
 ----
 
-** For HTTP plug-in registry, the entries use `http://plugin-registry:8080/...` URLs instead.
+** For HTTP plug-in registry, the entries use `http://plugin-registry:8080/\...` URLs instead.
 
 
 . Click btn:[Save].
