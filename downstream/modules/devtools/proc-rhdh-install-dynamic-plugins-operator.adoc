@@ -10,15 +10,14 @@ If you have not already created a ConfigMap file for your {RHDHShort} plugin set
 create one by following the procedure in the
 link:{BaseURL}/openshift_container_platform/{OCPLatest}/html-single/nodes/index#configmaps[Creating and using config maps] section of the {OCPShort} _Nodes_ guide.
 
-The example ConfigMap used in the following procedure is called `rhaap-dynamic-plugins-config`.
-
 .Procedure
 
 . Select *ConfigMaps* in the navigation pane of the OpenShift console.
 . Select the `rhaap-dynamic-plugins-config` ConfigMap from the list.
 . Select the *YAML* tab to edit the `rhaap-dynamic-plugins-config` ConfigMap.
-. The dynamic plug-ins are pulled from `registry.redhat.io`.
-** Ensure the image tag at the end of the `package` URL (for example, :2.6) matches your desired version.
+. Add the Ansible plug-ins. Choose the configuration that matches your delivery method.
++
+** OCI container delivery method (recommended):
 +
 ----
 kind: ConfigMap
@@ -31,8 +30,7 @@ data:
       - dynamic-plugins.default.yaml
     plugins:
       - disabled: false
-        # UPDATED: Point to the Red Hat OCI Registry
-        package: 'oci:registry.redhat.io/ansible-automation-platform/automation-portal:2.6'
+        package: 'oci:registry.redhat.io/ansible-automation-platform/ansible-plugin-backstage-rhaap-dynamic:x.y.z'
         pluginConfig:
           dynamicPlugins:
             frontend:
@@ -46,19 +44,58 @@ data:
                       icon: AnsibleLogo
                       text: Ansible
                     path: /ansible
-      
       - disabled: false
-        # UPDATED: Point to the Red Hat OCI Registry
-        package: 'oci:registry.redhat.io/ansible-automation-platform/automation-portal:2.6'
+        package: 'oci:registry.redhat.io/ansible-automation-platform/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic:x.y.z'
         pluginConfig:
           dynamicPlugins:
             backend:
               ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
 ----
++
+Replace `x.y.z` with the Ansible plug-ins version.
+
+
+** HTTP plug-in registry method:
++
+----
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: rhaap-dynamic-plugins-config
+data:
+  dynamic-plugins.yaml: |
+    includes:
+      - dynamic-plugins.default.yaml
+    plugins:
+      - disabled: false
+        package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
+        integrity: <SHA512 value>
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              ansible.plugin-backstage-rhaap:
+                appIcons:
+                  - importName: AnsibleLogo
+                    name: AnsibleLogo
+                dynamicRoutes:
+                  - importName: AnsiblePage
+                    menuItem:
+                      icon: AnsibleLogo
+                      text: Ansible
+                    path: /ansible
+      - disabled: false
+        package: >-
+          http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
+        integrity: <SHA512 value>
+        pluginConfig:
+          dynamicPlugins:
+            backend:
+              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
+----
+
 . Click btn:[Save].
-. To view the progress of the rolling restart:
-.. In the *Topology* view, select the deployment pod and click *View logs*.
-.. Select `install-dynamic-plugins` from the list of containers.
+
+
 
 .Verification
 
@@ -67,5 +104,3 @@ data:
 
 The Ansible plug-in is present in the navigation pane, and if you select *Administration*,
 the installed plug-ins are listed in the *Plugins* tab.
-
- 

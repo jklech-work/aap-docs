@@ -4,38 +4,41 @@
 = Full Helm chart config example for Ansible plug-ins
 
 [role="_abstract"]
-This example provides a full YAML configuration for the Helm chart, illustrating the precise structure needed to integrate the Ansible plug-ins into the {RHDH} installation.
+This example provides a full YAML configuration for the Helm chart using OCI container delivery.
 
 ----
 global:
-  # Enable OCI mode for plugins
-  pluginMode: oci
-  imageTagInfo: "2.1"
-  
-  # Dynamic plugin configuration (removes manual package references)
   dynamic:
     includes:
       - dynamic-plugins.default.yaml
-    plugins: []
-    pluginConfig:
-      dynamicPlugins:
-        frontend:
-          ansible.plugin-backstage-rhaap:
-            appIcons:
-              - importName: AnsibleLogo
-                name: AnsibleLogo
-            dynamicRoutes:
-              - importName: AnsiblePage
-                menuItem:
-                  icon: AnsibleLogo
-                  text: Ansible
-                path: /ansible
+    plugins:
+      - disabled: false
+        package: 'oci:registry.redhat.io/ansible-automation-platform/ansible-plugin-backstage-rhaap-dynamic:x.y.z'
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              ansible.plugin-backstage-rhaap:
+                appIcons:
+                  - importName: AnsibleLogo
+                    name: AnsibleLogo
+                dynamicRoutes:
+                  - importName: AnsiblePage
+                    menuItem:
+                      icon: AnsibleLogo
+                      text: Ansible
+                    path: /ansible
+      - disabled: false
+        package: 'oci:registry.redhat.io/ansible-automation-platform/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic:x.y.z'
+        pluginConfig:
+          dynamicPlugins:
+            backend:
+              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
 
 upstream:
   backstage:
     image:
       pullSecrets:
-        - <your-redhat-registry-pull-secret> # Ensure you have created this secret
+        - <your-redhat-registry-pull-secret>
     extraAppConfig:
       - configMapRef: app-config-rhdh
         filename: app-config-rhdh.yaml
