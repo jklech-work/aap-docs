@@ -23,11 +23,11 @@ For this example, the ConfigMap name is `rhaap-dynamic-plugins-config`.
 ----
 plugins:
   - disabled: false
-    package: 'oci:registry.redhat.io/ansible-automation-platform/ansible-plugin-backstage-rhaap-dynamic:x.y.z'
+    package: 'oci:registry.redhat.io/ansible-automation-platform/ansible-plugin-backstage-rhaap:x.y.z'
     pluginConfig:
       ...
   - disabled: false
-    package: 'oci:registry.redhat.io/ansible-automation-platform/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic:x.y.z'
+    package: 'oci:registry.redhat.io/ansible-automation-platform/ansible-plugin-scaffolder-backend-module-backstage-rhaap:x.y.z'
     pluginConfig:
       ...
 ----
